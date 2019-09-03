@@ -2,13 +2,12 @@ apiVersion: skaffold/v1beta13
 kind: Config
 build:
   artifacts:
-  - image: quay.io/sololabs/echo-server
+  - image: echo-server
     context: .
     docker:
       dockerfile: Dockerfile
-  tagPolicy:
-    gitCommit: {}
-  local: {}
+  local:
+    push: true
 deploy:
   kubectl:
     manifests:

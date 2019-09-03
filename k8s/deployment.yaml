@@ -16,14 +16,27 @@ spec:
     spec:
       containers:
       - name: echo-server
-        image: quay.io/sololabs/echo-server
+        image: echo-server
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
+          name: http
         resources:
           requests:
-            memory: "64Mi"
-            cpu: "250m"
+            memory: "16Mi"
+            cpu: "100m"
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "32Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 5
